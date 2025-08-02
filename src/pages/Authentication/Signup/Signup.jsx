@@ -2,6 +2,7 @@ import React from "react";
 import signup from "/signup.png";
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const Signup = () => {
@@ -38,20 +39,34 @@ const Signup = () => {
                 className="input w-full bg-gray-50 text-black"
                 placeholder="Email"
               />
-              <label className="label text-[18px] text-black">
-                Upload Photo
-              </label>
-              <input
-                type="file"
-                className="input w-full bg-gray-50 text-black"
-                placeholder="Select Your Photo"
-              />
+
               <label className="label text-[18px] text-black">Password</label>
               <input
                 type="password"
                 className="input w-full bg-gray-50 text-black"
                 placeholder="Password"
               />
+
+              <label className="block text-[18px] text-black">
+                Upload Photo
+              </label>
+              <label
+                htmlFor="file-upload"
+                className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-green-500 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <FaCloudUploadAlt className="text-4xl text-green-600 mb-2" />
+                  <p className="mb-1 text-sm text-gray-600">
+                    <span className="font-semibold">Click to upload</span> or
+                    drag & drop
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, JPEG (Max: 5MB)
+                  </p>
+                </div>
+                <input id="file-upload" type="file" className="hidden" />
+              </label>
+
               <button className="btn text-black hover:text-green-700 bg-green-600 hover:bg-transparent border border-green-700 mt-4">
                 Sign Up
               </button>
