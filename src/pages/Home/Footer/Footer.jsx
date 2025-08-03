@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div className="bg-black text-white">
-      <div className="max-w-7xl mx-auto px-5 py-20">
+      <div className="max-w-7xl mx-auto px-5 py-10">
         <div className="flex flex-col md:flex-row gap-5 justify-between">
           <div className=" md:w-1/2 flex flex-col justify-start items-start">
             <h1 className="text-3xl font-bold">
@@ -21,8 +21,8 @@ const Footer = () => {
             <div>
               <h1 className="text-[20px] font-semibold pb-6">Services</h1>
               <ul className="text-[12px] space-y-2">
-                <li>Oue Model</li>
-                <li>Talent and Workforce Strategy</li>
+                <li>Oue Services</li>
+                <li>Warehouses</li>
                 <li>Optimize your Talent processes</li>
                 <li>Interim Consultants</li>
                 <li>Advisory Servicer</li>
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
         <hr className="border border-white w-full my-5" />
         <p className=" py-6 text-[14px]">
-          2024 Copyright Bendertm I All Right Reserved
+          2025 Copyright Desh Courier | All Right Reserved
         </p>
       </div>
     </div>

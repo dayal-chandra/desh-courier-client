@@ -26,7 +26,7 @@ const Signup = () => {
             <h1 className="text-2xl text-black font-semibold text-center">
               Sign Up
             </h1>
-            <fieldset className="fieldset">
+            <form className="fieldset">
               <label className="label text-[18px] text-black">Name</label>
               <input
                 type="text"
@@ -54,7 +54,7 @@ const Signup = () => {
                 htmlFor="file-upload"
                 className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-green-500 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
               >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <div className="flex flex-col items-center justify-center py-2">
                   <FaCloudUploadAlt className="text-4xl text-green-600 mb-2" />
                   <p className="mb-1 text-sm text-gray-600">
                     <span className="font-semibold">Click to upload</span> or
@@ -86,7 +86,7 @@ const Signup = () => {
                 <FcGoogle size={25} />
                 Continue with Google
               </button>
-            </fieldset>
+            </form>
           </div>
         </div>
       </div>

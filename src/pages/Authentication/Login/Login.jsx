@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const Login = () => {
   return (
-    <div className="hero max-w-7xl mx-auto">
+    <div className=" max-w-7xl mx-auto">
       <div className="hero-content px-5 flex-col lg:flex-row-reverse w-full">
         <motion.div
           animate={{ y: [0, -20, 0] }}
