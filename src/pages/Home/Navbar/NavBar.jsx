@@ -4,8 +4,21 @@ import { IoClose } from "react-icons/io5";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { TiThMenu } from "react-icons/ti";
 import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 
 const NavBar = () => {
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const navItems = (
     <>
       <li>
@@ -14,12 +27,16 @@ const NavBar = () => {
       <li>
         <NavLink to="/book-a-parcel">Book A Parcel</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
-      <li>
-        <button>Logout</button>
-      </li>
+
+      {user ? (
+        <li>
+          <button onClick={handleLogout}>Logout</button>
+        </li>
+      ) : (
+        <li>
+          <NavLink to="/login">Login</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -64,16 +81,29 @@ const NavBar = () => {
                     className="drawer-overlay"
                   ></label>
 
-                  <ul className="menu bg-base-200 min-h-full w-1/2  pt-12">
+                  <div className="menu bg-base-200 min-h-full w-1/2 pt-12 relative">
                     <label
                       htmlFor="my-drawer"
                       className="absolute top-5 left-5 cursor-pointer"
                     >
                       <IoClose size={25} />
                     </label>
-                    <div className="border-b-1"></div>
+
+                    <div className="border-b border-gray-300 mb-2"></div>
+
+                    {user && (
+                      <div className="flex flex-col justify-center items-center gap-2 md:hidden">
+                        <img
+                          className="w-10 h-10 rounded-full object-cover border-2 border-green-600 shadow-md"
+                          src={user.photoURL}
+                          alt="User"
+                        />
+                        <p>{user.displayName}</p>
+                      </div>
+                    )}
+
                     {navItems}
-                  </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,6 +125,19 @@ const NavBar = () => {
             <button type="button" onClick={toggleTheme}>
               {theme ? <MdOutlineWbSunny size={25} /> : <FaMoon size={25} />}
             </button>
+          </div>
+          <div>
+            {user ? (
+              <div className="rounded-full border border-green-600 ml-4 hidden md:flex">
+                <img
+                  className="w-10 h-10 rounded-full object-cover"
+                  src={user.photoURL}
+                  alt=""
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

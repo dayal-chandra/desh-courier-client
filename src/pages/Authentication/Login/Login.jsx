@@ -1,10 +1,35 @@
 import React from "react";
 import login from "/login.png";
-import { Link } from "react-router";
-import { FcGoogle } from "react-icons/fc";
+import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { signIn } = useAuth();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || "/";
+
+  const onSubmit = (data) => {
+    signIn(data.email, data.password)
+      .then((result) => {
+        console.log(result.user);
+        navigate(from);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className=" max-w-7xl mx-auto">
       <div className="hero-content px-5 flex-col lg:flex-row-reverse w-full">
@@ -25,19 +50,34 @@ const Login = () => {
             <h1 className="text-2xl text-black font-semibold text-center">
               Login Your Account
             </h1>
-            <fieldset className="fieldset">
+            <form onSubmit={handleSubmit(onSubmit)} className="fieldset">
               <label className="label text-[18px] text-black">Email</label>
               <input
                 type="email"
                 className="input w-full bg-gray-50 text-black"
                 placeholder="Email"
+                {...register("email", { required: true })}
               />
+              {errors.email?.type === "required" && (
+                <p className="text-red-500">Email is required</p>
+              )}
+
               <label className="label text-[18px] text-black">Password</label>
               <input
                 type="password"
                 className="input w-full bg-gray-50 text-black"
                 placeholder="Password"
+                {...register("password", { required: true, minLength: 6 })}
               />
+              {errors.password?.type === "required" && (
+                <p className="text-red-500">Password is required</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500">
+                  Password must be 6 character long.
+                </p>
+              )}
+
               <div>
                 <a className="link link-hover text-[16px] text-black">
                   Forgot password?
@@ -52,17 +92,8 @@ const Login = () => {
                   Signup
                 </Link>
               </div>
-              <div className="flex items-center w-full">
-                <hr className="w-full dark:text-gray-600" />
-                <p className="px-3 dark:text-gray-600">OR</p>
-                <hr className="w-full dark:text-gray-600" />
-              </div>
-
-              <button className="btn bg-green-600 text-black border border-green-700 hover:text-green-700 hover:bg-transparent">
-                <FcGoogle size={25} />
-                Continue with Google
-              </button>
-            </fieldset>
+            </form>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>
