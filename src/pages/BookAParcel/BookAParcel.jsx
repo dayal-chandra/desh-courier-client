@@ -15,6 +15,36 @@ const BookAParcel = () => {
     reset,
   } = useForm();
 
+  // const onSubmit = (data) => {
+  //   if (!user?.email) {
+  //     return Swal.fire({
+  //       icon: "error",
+  //       title: "User not logged in",
+  //       text: "Please log in to book a parcel.",
+  //     });
+  //   }
+
+  //   const parcelData = {
+  //     ...data,
+  //     senderEmail: user.email,
+  //     status: "Pending",
+  //     bookingTime: new Date(),
+  //   };
+
+  //   console.log("Booking Data:", parcelData);
+
+  //   axiosSecure.post("/parcels", parcelData).then(() => {
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "success",
+  //       title: "Parcel added Successfully!",
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     });
+  //     reset();
+  //   });
+  // };
+
   const onSubmit = (data) => {
     if (!user?.email) {
       return Swal.fire({
@@ -24,11 +54,14 @@ const BookAParcel = () => {
       });
     }
 
+    const trackingId = `DSH-${Date.now()}`;
+
     const parcelData = {
       ...data,
       senderEmail: user.email,
       status: "Pending",
       bookingTime: new Date(),
+      trackingId,
     };
 
     console.log("Booking Data:", parcelData);

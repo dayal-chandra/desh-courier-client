@@ -24,6 +24,7 @@ const MyParcels = () => {
           <tr className="bg-[#b3efb68e] text-black text-left">
             <th>#</th>
             <th>Type</th>
+            <th>Tracking ID</th>
             <th>Receiver</th>
             <th>Delivery Address</th>
             <th>Status</th>
@@ -32,9 +33,10 @@ const MyParcels = () => {
         </thead>
         <tbody>
           {parcels.map((parcel, index) => (
-            <tr key={parcel._id} className="hover:bg-gray-50">
+            <tr key={parcel._id} className="hover:bg-gray-50 hover:text-black">
               <td>{index + 1}</td>
               <td>{parcel.parcelType}</td>
+              <td>{parcel.trackingId}</td>
               <td>{parcel.receiverName}</td>
               <td>{parcel.deliveryAddress}</td>
               <td>
@@ -48,7 +50,7 @@ const MyParcels = () => {
                   {parcel.status}
                 </span>
               </td>
-              <td>৳{parcel.price}</td>
+              <td>৳{parcel.deliveryFee}</td>
             </tr>
           ))}
         </tbody>

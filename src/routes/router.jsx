@@ -6,6 +6,11 @@ import Signup from "../pages/Authentication/Signup/Signup";
 import BookAParcel from "../pages/BookAParcel/BookAParcel";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import MyParcel from "../pages/MyParcel/MyParcel";
+import BeARider from "../pages/BeARider/BeARider";
+import AdminLayout from "../layouts/AdminLayout";
+import DashboardHome from "../Admin/DashboardHome";
+import PendingRiders from "../Admin/PendingRiders";
+import Users from "../Admin/Users";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +42,48 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyParcel></MyParcel>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/be-a-rider",
+        element: (
+          <PrivateRoute>
+            <BeARider></BeARider>
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: (
+      <PrivateRoute>
+        <AdminLayout></AdminLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "dashboard-home",
+        element: (
+          <PrivateRoute>
+            <DashboardHome></DashboardHome>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "pending-riders",
+        element: (
+          <PrivateRoute>
+            <PendingRiders></PendingRiders>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <PrivateRoute>
+            <Users></Users>
           </PrivateRoute>
         ),
       },
