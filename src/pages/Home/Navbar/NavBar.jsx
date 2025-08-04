@@ -12,7 +12,6 @@ const NavBar = () => {
   const { user, logout } = useAuth();
   const [dbUser, setDbUser] = useState("");
   const axiosInstance = useAxios();
-  console.log(dbUser);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -58,13 +57,22 @@ const NavBar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/book-a-parcel">Book A Parcel</NavLink>
-      </li>
+      {dbUser?.role === "customer" && (
+        <li>
+          <NavLink to="/book-a-parcel">Book A Parcel</NavLink>
+        </li>
+      )}
 
-      <li>
-        <NavLink to="/my-parcel">My Parcel</NavLink>
-      </li>
+      {dbUser?.role === "customer" && (
+        <li>
+          <NavLink to="/my-parcel">My Parcel</NavLink>
+        </li>
+      )}
+      {dbUser?.role === "rider" && (
+        <li>
+          <NavLink to="/assigned-parcels">Assigned Parcel</NavLink>
+        </li>
+      )}
 
       {dbUser?.role === "customer" && (
         <li>
@@ -111,7 +119,7 @@ const NavBar = () => {
       <div className="navbar max-w-7xl mx-auto px-5">
         <div className="navbar-start">
           <div className="z-50">
-            <div tabIndex={0} role="button" className=" md:hidden">
+            <div tabIndex={0} role="button" className=" lg:hidden">
               <div className="drawer">
                 <input
                   id="my-drawer"
@@ -168,7 +176,7 @@ const NavBar = () => {
           </Link>
         </div>
         <div className="navbar-end">
-          <ul className="menu menu-horizontal px-2 hidden md:flex">
+          <ul className="menu menu-horizontal px-2 hidden lg:flex">
             {navItems}
           </ul>
           <div className="mt-2">

@@ -43,6 +43,13 @@ const AdminLayout = () => {
             🛵 Pending Riders
           </Link>
           <Link
+            to="/admin/pending-parcels"
+            className="text-gray-700 hover:text-green-600"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            📦 Pending Parcels
+          </Link>
+          <Link
             to="/admin/users"
             className="text-gray-700 hover:text-green-600"
             onClick={() => setIsSidebarOpen(false)}

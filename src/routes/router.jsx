@@ -11,6 +11,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import DashboardHome from "../Admin/DashboardHome";
 import PendingRiders from "../Admin/PendingRiders";
 import Users from "../Admin/Users";
+import PendingParcels from "../Admin/PendingParcels";
+import AssignedParcel from "../pages/AssignedParcel/AssignedParcel";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/assigned-parcels",
+        element: (
+          <PrivateRoute>
+            <AssignedParcel></AssignedParcel>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/be-a-rider",
         element: (
           <PrivateRoute>
@@ -76,6 +86,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <PendingRiders></PendingRiders>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "pending-parcels",
+        element: (
+          <PrivateRoute>
+            <PendingParcels></PendingParcels>
           </PrivateRoute>
         ),
       },

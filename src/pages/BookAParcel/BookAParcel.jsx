@@ -59,7 +59,7 @@ const BookAParcel = () => {
     const parcelData = {
       ...data,
       senderEmail: user.email,
-      status: "Pending",
+      status: "pending",
       bookingTime: new Date(),
       trackingId,
     };
