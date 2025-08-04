@@ -6,7 +6,7 @@ DeshCourier is a full-featured **Courier and Parcel Management System** built wi
 
 ## 🔗 Live Demo
 
-🌐 [Live Website](https://your-deployment-link.com)  
+🌐 [Live Website](https://desh-courier.netlify.app/)  
 📺 [Admin Credentials] – `golam@rabbi.com` / `123456`
 📺 [Rider Credentials] – `sabalu@vai.com` / `123456`
 
