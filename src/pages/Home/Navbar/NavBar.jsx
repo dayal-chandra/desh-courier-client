@@ -6,9 +6,28 @@ import { TiThMenu } from "react-icons/ti";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxios from "../../../hooks/useAxios";
 
 const NavBar = () => {
   const { user, logout } = useAuth();
+  const [dbUser, setDbUser] = useState("");
+  const axiosInstance = useAxios();
+  console.log(dbUser);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (user?.email) {
+          const response = await axiosInstance(`/users/${user.email}`);
+          setDbUser(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, [user?.email, axiosInstance]);
 
   const handleLogout = () => {
     logout()
@@ -42,12 +61,22 @@ const NavBar = () => {
       <li>
         <NavLink to="/book-a-parcel">Book A Parcel</NavLink>
       </li>
+
       <li>
         <NavLink to="/my-parcel">My Parcel</NavLink>
       </li>
-      <li>
-        <NavLink to="/be-a-rider">Be A Rider</NavLink>
-      </li>
+
+      {dbUser?.role === "customer" && (
+        <li>
+          <NavLink to="/be-a-rider">Be A Rider</NavLink>
+        </li>
+      )}
+
+      {dbUser?.role === "admin" && (
+        <li>
+          <NavLink to="/admin">Dashboard</NavLink>
+        </li>
+      )}
 
       {user ? (
         <li>

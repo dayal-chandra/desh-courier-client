@@ -18,17 +18,21 @@ const Users = () => {
         <table className="w-full">
           <thead>
             <tr className="bg-gray-200 text-left">
-              <th className="p-2">Username</th>
               <th className="p-2">Email</th>
               <th className="p-2">Role</th>
+              <th className="p-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user._id} className="border-t">
-                <td className="p-2">{user.name || "N/A"}</td>
                 <td className="p-2">{user.email}</td>
                 <td className="p-2">{user.role || "User"}</td>
+                <td>
+                  <button className="btn-xs bg-green-600 text-white rounded-2xl px-2">
+                    Make admin
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

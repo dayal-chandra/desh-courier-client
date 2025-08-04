@@ -29,7 +29,7 @@ const BeARider = () => {
       ...data,
       name: user.fullName,
       email: user.email,
-      status: "Pending",
+      status: "pending",
       appliedAt: new Date(),
     };
 

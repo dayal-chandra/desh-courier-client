@@ -1,20 +1,53 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const PendingRiders = () => {
   const axiosSecure = useAxiosSecure();
   const [riders, setRiders] = useState([]);
 
   useEffect(() => {
-    axiosSecure.get("/riders?status=Pending").then((res) => {
+    axiosSecure.get("/riders").then((res) => {
       setRiders(res.data);
     });
   }, [axiosSecure]);
 
-  const handleApprove = (id) => {
-    axiosSecure.patch(`/riders/${id}`, { status: "Approved" }).then(() => {
-      setRiders((prev) => prev.filter((rider) => rider._id !== id));
-    });
+  const handleApprove = async (riderId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to approve this rider?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, approve!",
+        cancelButtonText: "Cancel",
+      });
+
+      if (result.isConfirmed) {
+        const response = await axiosSecure.patch(`/approve-rider/${riderId}`);
+
+        if (response.data) {
+          Swal.fire({
+            title: "Approved!",
+            text: "Rider has been approved successfully.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+
+          // Update local state - remove approved rider
+          setRiders((prevRiders) =>
+            prevRiders.filter((rider) => rider._id !== riderId)
+          );
+        }
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to approve rider. Please try again.",
+        icon: "error",
+      });
+    }
   };
 
   return (
