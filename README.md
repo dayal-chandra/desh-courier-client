@@ -1,12 +1,60 @@
-# React + Vite
+# 🚚 DeshCourier - Courier and Parcel Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DeshCourier is a full-featured **Courier and Parcel Management System** built with the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**. It supports user authentication, parcel bookings, rider management, admin panel, and real-time parcel tracking.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Demo
 
-## Expanding the ESLint configuration
+🌐 [Live Website](https://your-deployment-link.com)  
+📺 [Admin Credentials] – `golam@rabbi.com` / `123456`
+📺 [Rider Credentials] – `sabalu@vai.com` / `123456`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🧠 Key Features
+
+### 🧑 User (Customer)
+
+- Register and log in
+- Book parcels by providing pickup & delivery information
+- Track parcel status
+- View parcel history
+
+### 🧍 Rider
+
+- View assigned parcels
+- Update parcel status (Picked Up → In Transit → Delivered / Failed)
+
+### 🛠 Admin
+
+- Manage all users and roles (approve riders)
+- View and assign pending parcels to riders
+- View system statistics (daily bookings, COD amount, etc.)
+
+---
+
+## ⚙️ Tech Stack
+
+### 🖥 Frontend
+
+- React.js + React Router
+- Tailwind CSS + DaisyUI
+- Axios & React Query
+- Firebase Authentication
+- SweetAlert2 for alerts
+
+### 🌐 Backend
+
+- Node.js + Express.js
+- MongoDB (native driver)
+- CORS, Dotenv
+
+---
+
+## 🔐 Authentication & Authorization
+
+- Firebase used for authentication (email/password)
+- Role-based access control (admin, rider, customer)
+
+---
