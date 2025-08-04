@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import signup from "/signup.png";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxios from "../../../hooks/useAxios";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const {
@@ -22,60 +23,33 @@ const Signup = () => {
   const axiosInstance = useAxios();
 
   const { createUser, updateUserProfile } = useAuth();
-
-  // const onSubmit =(data) => {
-  //   // console.log(data);
-  //   createUser(data.email, data.password)
-  //     .then(async (result) => {
-  //       console.log(result.user);
-
-  //       // update user info in the database
-  //       const userInfo = {
-  //         email: data.email,
-  //         role: "customer",
-  //         created_at: new Date().toISOString(),
-  //         last_log_in: new Date().toISOString(),
-  //       };
-
-  //       const userRes = await axiosInstance.post("/users", userInfo);
-  //       console.log(userRes.data);
-
-  //       //  update user profile in firebase
-  //       const userProfile = {
-  //         displayName: data.name,
-  //         photoURL: profilePic,
-  //       };
-  //       updateUserProfile(userProfile)
-  //         .then(() => {
-  //           console.log("Profile picture uploaded.");
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
-
-  // Image Upload
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || "/";
 
   const onSubmit = async (data) => {
     try {
       const result = await createUser(data.email, data.password);
       console.log(result.user);
 
-      // 1. Update Firebase user profile
+      //Update Firebase user profile
       await updateUserProfile({
         displayName: data.name,
         photoURL: profilePic,
       });
       console.log("User profile updated.");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Signup Successful!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate(from);
 
-      // 2. OPTIONAL: Refresh user to reflect latest profile info
       await result.user.reload();
 
-      // 3. Update backend database
+      //Update backend database
       const userInfo = {
         email: data.email,
         role: "customer",
@@ -87,6 +61,13 @@ const Signup = () => {
       console.log("User saved to DB:", userRes.data);
     } catch (error) {
       console.error("Signup error:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 

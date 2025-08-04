@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home/Home";
 import Login from "../pages/Authentication/Login/Login";
 import Signup from "../pages/Authentication/Signup/Signup";
 import BookAParcel from "../pages/BookAParcel/BookAParcel";
+import PrivateRoute from "../privateRoute/PrivateRoute";
+import MyParcel from "../pages/MyParcel/MyParcel";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +26,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/book-a-parcel",
-        element: <BookAParcel></BookAParcel>,
+        element: (
+          <PrivateRoute>
+            <BookAParcel></BookAParcel>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-parcel",
+        element: (
+          <PrivateRoute>
+            <MyParcel></MyParcel>
+          </PrivateRoute>
+        ),
       },
     ],
   },

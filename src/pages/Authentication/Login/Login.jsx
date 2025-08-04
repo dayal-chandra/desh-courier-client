@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -23,10 +24,24 @@ const Login = () => {
     signIn(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate(from);
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
 

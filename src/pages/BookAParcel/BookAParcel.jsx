@@ -1,8 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaBoxOpen, FaMapMarkedAlt, FaMoneyBillWave } from "react-icons/fa";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const BookAParcel = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -11,9 +16,33 @@ const BookAParcel = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Booking Data:", data);
-    // Handle submission to backend
-    reset();
+    if (!user?.email) {
+      return Swal.fire({
+        icon: "error",
+        title: "User not logged in",
+        text: "Please log in to book a parcel.",
+      });
+    }
+
+    const parcelData = {
+      ...data,
+      senderEmail: user.email,
+      status: "Pending",
+      bookingTime: new Date(),
+    };
+
+    console.log("Booking Data:", parcelData);
+
+    axiosSecure.post("/parcels", parcelData).then(() => {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Parcel added Successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      reset();
+    });
   };
 
   return (
@@ -23,6 +52,46 @@ const BookAParcel = () => {
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Parcel title */}
+        <div>
+          <label className="mb-1 font-medium text-gray-700 flex items-center gap-2">
+            <FaBoxOpen /> Parcel Title
+          </label>
+          <input
+            type="text"
+            placeholder="Enter parcel title"
+            className="w-full px-4 py-2 text-gray-600 bg-white border border-dashed border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            {...register("parcelTitle", {
+              required: "Parcel title is required",
+            })}
+          />
+          {errors.parcelTitle && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.parcelTitle.message}
+            </p>
+          )}
+        </div>
+
+        {/* Receiver name */}
+        <div>
+          <label className="mb-1 font-medium text-gray-700 flex items-center gap-2">
+            <FaBoxOpen /> Receiver Name
+          </label>
+          <input
+            type="text"
+            placeholder="Enter receiver's full name"
+            className="w-full px-4 py-2 text-gray-600 bg-white border border-dashed border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            {...register("receiverName", {
+              required: "Receiver name is required",
+            })}
+          />
+          {errors.receiverName && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.receiverName.message}
+            </p>
+          )}
+        </div>
+
         {/* Pickup Address */}
         <div>
           <label className=" mb-1 font-medium text-gray-700 flex items-center gap-2">
@@ -81,6 +150,30 @@ const BookAParcel = () => {
           {errors.parcelType && (
             <p className="text-red-500 text-sm mt-1">
               {errors.parcelType.message}
+            </p>
+          )}
+        </div>
+
+        {/* Delivery fee */}
+        <div>
+          <label className="mb-1 font-medium text-gray-700 flex items-center gap-2">
+            <FaMoneyBillWave /> Delivery Fee
+          </label>
+          <input
+            type="number"
+            placeholder="Enter delivery fee"
+            className="w-full px-4 py-2 text-gray-600 bg-white border border-dashed border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            {...register("deliveryFee", {
+              required: "Delivery fee is required",
+              min: {
+                value: 1,
+                message: "Fee must be at least 1",
+              },
+            })}
+          />
+          {errors.deliveryFee && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.deliveryFee.message}
             </p>
           )}
         </div>

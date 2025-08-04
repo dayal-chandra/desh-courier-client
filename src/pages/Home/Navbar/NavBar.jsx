@@ -5,6 +5,7 @@ import { MdOutlineWbSunny } from "react-icons/md";
 import { TiThMenu } from "react-icons/ti";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const NavBar = () => {
   const { user, logout } = useAuth();
@@ -13,9 +14,23 @@ const NavBar = () => {
     logout()
       .then((res) => {
         console.log(res);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Logout Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
 
@@ -26,6 +41,9 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink to="/book-a-parcel">Book A Parcel</NavLink>
+      </li>
+      <li>
+        <NavLink to="/my-parcel">My Parcel</NavLink>
       </li>
 
       {user ? (
